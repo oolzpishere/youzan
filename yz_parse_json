@@ -1,4 +1,11 @@
 [
+  "越南 ~河内+下龙湾【深度体验】 4天3晚·双口岸进出 天堂岛",
+  "https://h5.youzan.com/v2/showcase/goods?alias=1y6ika0uu21i7&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:18945585:出行日期:3月30/31日"
+    }
+  ],
   "缅甸 ~仰光+曼德勒【心灵之旅】 8天7晚·蒲甘日落 内陆②飞",
   "https://h5.youzan.com/v2/showcase/goods?alias=1ydvld6qduxkv&from=wsc&kdtfrom=wsc",
   [
@@ -119,6 +126,13 @@
       "properties_name": "539:5535293:出行日期:3月6/13/20/27日"
     }
   ],
+  "印尼 ~ 巴厘岛+蓝梦岛【初遇】 6天5晚·文艺乌布 送脏鸭餐",
+  "https://h5.youzan.com/v2/showcase/goods?alias=1ylb1jbgodma7&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:11865:出行日期:3月30日"
+    }
+  ],
   "阿联酋 ~迪拜+阿布扎比【超值】 5天4晚·阿曼航空 8星皇宫酒店",
   "https://h5.youzan.com/v2/showcase/goods?alias=2xct54gzh1wzz&from=wsc&kdtfrom=wsc",
   [
@@ -141,6 +155,26 @@
   [
     {
       "properties_name": "539:18937021:出行日期:3月8/10/15/17/22日"
+    }
+  ],
+  "刘三姐遇上阿诗玛-三月三十日与交通1003在大理、丽江、香格里拉期待遇见，六日游",
+  "https://h5.youzan.com/v2/showcase/goods?alias=36430lhgdj1db&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:2813064:出行人群:1.2米以下儿童（不占床）"
+    },
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:10381:出行人群:成人"
+    }
+  ],
+  "春城-绿城一线牵，三月三十日与交通1003畅游大理、腾冲、热海公园、芒市，六日游",
+  "https://h5.youzan.com/v2/showcase/goods?alias=26xt50fsrrkbj&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:10381:出行人群:成人"
+    },
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:2813064:出行人群:1.2米以下儿童（不占床）"
     }
   ],
   "印尼 ~ 巴厘岛深度游【魅 • 蓝】 6天5晚·②天Free 升级国际五星",
@@ -192,6 +226,33 @@
     },
     {
       "properties_name": "539:1200542:出行日期:3月25日"
+    }
+  ],
+  "测试商品",
+  "https://h5.youzan.com/v2/showcase/goods?alias=26u43rceqta4f&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:11865:出行日期:3月30日"
+    }
+  ],
+  "春城-绿城一线牵，三月三十日与交通1003畅游大理、腾冲、热海公园、芒市。（五晚六日，高品质纯玩）",
+  "https://h5.youzan.com/v2/showcase/goods?alias=2ohpwrosm1c7j&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:10381:出行人群:成人"
+    },
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:2813064:出行人群:1.2米以下儿童（不占床）"
+    }
+  ],
+  "刘三姐遇上阿诗玛-三月三十日与交通1003在大理、丽江、香格里拉期待遇见。（五晚六日，高品质纯玩）",
+  "https://h5.youzan.com/v2/showcase/goods?alias=2x5e7twumfoyn&from=wsc&kdtfrom=wsc",
+  [
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:2813064:出行人群:1.2米以下儿童（不占床）"
+    },
+    {
+      "properties_name": "539:11865:出行日期:3月30日;540:10381:出行人群:成人"
     }
   ],
   60

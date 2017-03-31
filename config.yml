@@ -1,0 +1,7 @@
+defaults: &defaults
+
+
+kdt_items_onsale_get:
+  #<<: *defaults
+  method:       kdt.items.onsale.get
+  page_size:    140

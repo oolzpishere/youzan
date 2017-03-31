@@ -27,7 +27,7 @@ module Youzan
             skus_array.push item["title"], item["detail_url"], sku_filter(item["skus"])
             break;
           end
-        end
+        end 
       end
       #for check items number ritht
       skus_array.push items_arr.count
@@ -58,11 +58,6 @@ module Youzan
     
   end
 end
-
-
-# def http_get
-#   Net::HTTP.get(curl_str)
-# end
 
 
 
