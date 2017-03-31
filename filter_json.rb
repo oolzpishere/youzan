@@ -24,7 +24,7 @@ module Youzan
       items_arr.each do |item|
         item["skus"].each do |sku|
           if date_comp?(sku["properties_name"])
-            skus_array.push item["title"], item["detail_url"], sku_filter(item["skus"])
+            skus_array.push item["title"], item["detail_url"], item["skus"] #sku_filter(item["skus"])
             break;
           end
         end 

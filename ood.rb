@@ -3,15 +3,15 @@ require 'digest/md5'
 require 'net/http'
 require 'json'
 require 'pry'
-require_relative 'config'
+require_relative 'uri'
 require_relative 'filter_json'
 
 module Youzan
   class ParseWorker
-    attr_reader :config
+    attr_reader :uri
     
     def initialize(opts)
-      @config = Youzan::Config.new(opts).params
+      @uri = Youzan::Uri.new(opts).gen_uri
     end
 
     def run
@@ -21,15 +21,11 @@ module Youzan
       write_to_file json
     end
 
-    def gen_uri
-      uri = URI("https://open.youzan.com/api/entry")
-      uri.query = URI.encode_www_form(config)
-      uri
-    end
+
     
     def http_get
       #binding.pry
-      Net::HTTP.get(gen_uri)
+      Net::HTTP.get(uri)
     end
 
     

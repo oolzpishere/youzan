@@ -1,7 +1,10 @@
 defaults: &defaults
-
+  format:          json
+  app_id:          a4f2cc760204c6d7c6
+  v:               1.0
+  sign_method:     md5
 
 kdt_items_onsale_get:
-  #<<: *defaults
+  <<: *defaults
   method:       kdt.items.onsale.get
   page_size:    140
