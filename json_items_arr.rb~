@@ -4,30 +4,31 @@ require 'net/http'
 require 'json'
 require 'pry'
 require_relative 'uri'
-require_relative 'filter_json'
+require_relative 'out_of_date_sku'
+require_relative 'items_arr'
 
 module Youzan
   class ParseWorker
-    attr_reader :uri
-    
+    attr_reader :uri, :json_arr, :api_type
+
     def initialize(opts)
       @uri = Youzan::Uri.new(opts).gen_uri
+      @api_type = opts[:api_type]
     end
 
     def run
+
       downloader = http_get
-      json = Youzan::FilterJson.new(downloader)
-      json = json.parse_json
-      write_to_file json
+      class_name = 'Youzan::' +  api_type.split('_').map(&:capitalize).join + 'Json'
+      @json_arr = Object.const_get(class_name).new(downloader).parse_json
+      #write_to_file json_arr
+      @json_arr
     end
-
-
     
     def http_get
       #binding.pry
       Net::HTTP.get(uri)
     end
-
     
     def write_to_file(json)
       #binding.pry
@@ -39,4 +40,4 @@ module Youzan
 end
 
 # api eg. kdt.items.onsale.get = kdt_items_onsale_get
-Youzan::ParseWorker.new({:filename => "config.yml", :api => "kdt_items_onsale_get"}).run
+

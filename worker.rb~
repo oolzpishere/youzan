@@ -1,0 +1,43 @@
+# coding: utf-8
+require 'digest/md5'
+require 'net/http'
+require 'json'
+require 'pry'
+require_relative 'uri'
+require_relative 'out_of_date_sku'
+require_relative 'items_arr'
+require_relative 'parse_json'
+
+module Youzan
+  class ParseWorker
+    attr_reader :uri, :json_arr
+    
+    def initialize(opts)
+      @uri = Youzan::Uri.new(opts).gen_uri
+    end
+
+    def run
+      downloader = http_get
+      @json_arr = Youzan::OutOfDateSku.new(downloader).parse_json
+      #write_to_file json_arr
+      @json_arr
+    end
+
+
+    
+    def http_get
+      #binding.pry
+      Net::HTTP.get(uri)
+    end
+    
+    def write_to_file(json)
+      #binding.pry
+      File.write("yz_parse_json", JSON.pretty_generate(json))
+    end
+    #binding.pry
+    
+  end
+end
+
+# api eg. kdt.items.onsale.get = kdt_items_onsale_get
+

@@ -8,3 +8,21 @@ kdt_items_onsale_get:
   <<: *defaults
   method:       kdt.items.onsale.get
   page_size:    140
+
+kdt_item_update:
+  <<: *defaults
+  method:		kdt.item.update
+
+kdt_items_update_delisting:
+  <<: *defaults
+  method:		kdt.items.update.delisting
+
+kdt_item_sku_update:
+  <<: *defaults
+  method:		kdt.item.sku.update
+
+base_url:
+  get:		https://open.youzan.com/api/entry/kdt.items.onsale/1.0.0/get
+  update:		https://open.youzan.com/api/entry/kdt.item/1.0.0/update
+  kdt_item_sku_update:			https://open.youzan.com/api/entry/kdt.item.sku/1.0.0/update
+  kdt_items_update_delisting:		https://open.youzan.com/api/entry/kdt.items.update/1.0.0/delisting
