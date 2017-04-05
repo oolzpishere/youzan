@@ -13,13 +13,15 @@ module Youzan
     def initialize(items_arr, opts)
       @items_arr = items_arr
       @api_type = opts[:api_type]
-      @parsed_arr = Youzan::KdtItemSkuUpdateArr.new(items_arr).parse_json
+      @parsed_arr = Youzan::KdtItemSkuUpdateArr.new(items_arr, opts).parse_json
       #parse_json
+
+      write_to_file @parsed_arr
     end
 
     def run
       parsed_arr.each do |sku|
-        #binding.pry
+        # binding.pry
         params = { "num_iid"  => "#{sku["num_iid"]}", "sku_id" =>  "#{sku["sku_id"]}",  "quantity" => '0' }
 
         run_update({:api_type => api_type, :base_url => api_type, :params => params})
@@ -32,6 +34,11 @@ module Youzan
       # binding.pry
       post = Net::HTTP.post_form( uri, args[:params] )
       post.body
+    end
+
+    def write_to_file(json)
+      #binding.pry
+      File.write("yz_parse_json", JSON.pretty_generate(json))
     end
     
     
