@@ -6,15 +6,13 @@ require 'pry'
 
 module Youzan
   class OutOfDate
-    attr_reader :raw_json
-    
     def initialize(raw_json)
       @raw_json = raw_json
       #parse_json
     end
 
     def yz_arr
-      JSON.parse(raw_json)
+      JSON.parse(@raw_json)
     end
     
     def items_arr
@@ -26,7 +24,7 @@ module Youzan
       items_arr.each do |item|
         item["skus"].each do |sku|
           if out_of_date?(sku["properties_name"])
-            skus_array.push item#["num_iid"], item["title"], item["detail_url"], item["skus"] #sku_filter(item["skus"])
+            skus_array.push item["num_iid"], item["title"], item["detail_url"], item["skus"] #sku_filter(item["skus"])
             break;
           end
         end 
@@ -40,16 +38,14 @@ module Youzan
     
     #out of date?
     def out_of_date? sku
+      #chineseMonth = `date "+%m月"`.chomp
+      month = `date "+%m"`.to_i
+      day =  `date "+%d"`.to_i
+      sku =~  /(\d+)月.*(\d+)日/
+      month_schedule = $1.to_i
+      day_schedule = $2.to_i
+      
       if  sku  =~ /出行日期/
-        #chineseMonth = `date "+%m月"`.chomp
-        month = `date "+%m"`.to_i
-        day =  `date "+%d"`.to_i
-        ### bug hidden. $1 change depend on proccess order
-        sku =~  /(\d+)月/
-        month_schedule = $1.to_i
-        sku =~  /(\d+)日/
-        day_schedule = $1.to_i
-        
         if month > month_schedule
           return true
         elsif month = month_schedule && day > day_schedule

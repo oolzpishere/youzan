@@ -17,50 +17,84 @@ module Youzan
     end
 
     def parse_json 
-      skus_array = Array.new
-      items_arr.each do |item|
-        item["skus"].each do |sku|
-          if out_of_date?(sku["properties_name"])
-            if api_type =~ /kdt_item_sku_update/
-              skus_array.push sku.merge({"title" => item["title"]})
-            end
-            #item["num_iid"], item["title"], item["detail_url"], item["skus"] #sku_filter(item["skus"])
-            # break;
-          end
-        end 
-      end
-      #for check items number ritht
-      # skus_array.push items_arr.count
-      skus_array
+      Sku.new(items_arr).skus_arr  
     end
 
-    private
+  end
+
+  class Sku
+    attr_reader :items_arr
+    def initialize(items_arr)
+      @items_arr = items_arr 
+    end
+
+    def filter_items
+      #binding.pry
+      arr = []
+      @skus_arr
+      items_arr.each do |item|
+        item["skus"].each do |sku|
+          arr.push(item) if out_of_date?( sku["properties_name"] )
+        end
+      end
+      arr
+    end
+
+    def skus_arr
+      arr = []
+      filter_items.each do |item|
+        item["skus"].each { |sku| arr.push(sku.merge({"title" => item["title"]}) )  if out_of_date?( sku["properties_name"] ) }
+      end
+      # binding.pry
+      arr
+    end
     
-    #out of date?
     def out_of_date? sku
-      if  sku  =~ /出行日期/
+      #out of date?
+      if  /出行日期/.match(sku)
         #chineseMonth = `date "+%m月"`.chomp
         month = `date "+%m"`.to_i
         day =  `date "+%d"`.to_i
-        ### bug hidden. $1 change depend on proccess order
         # binding.pry
-        sku =~  /(\d+)月/
+        /(\d+)月/.match(sku)
         month_schedule = $1.to_i
-        sku =~  /(\d+)日/
+        /(\d+)日/.match(sku)
         # nil.to_i is 0.   other string can't convert to integer is 0.
         day_schedule = $1.to_i
-        
+
+        # schedule = (month_schedule + day_schedule).to_i
+
+        # return true if now > schedule
         if month > month_schedule
           return true
-        elsif month = month_schedule && day_schedule > 0 && day > day_schedule
-          return true
-        
+        elsif month = month_schedule && day_schedule > 0 && day >= day_schedule
+          return true 
         end
+        
       end
     end
-    
-    
   end
+
+  # class DateString
+    
+  # end
+  # class MatchDateString
+  #   def initialize(str)
+  #   end
+
+  #   def match
+  #     /出行日期/.match(sku) && str
+  #   end
+    
+  #   def find
+  #     str.match
+  #   end
+  # end
+
+  # class MissingDateString
+    
+  # end 
+  
 end
 
 

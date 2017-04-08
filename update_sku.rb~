@@ -6,49 +6,36 @@ require 'pry'
 require_relative 'uri'
 require_relative 'out_of_date_sku'
 require_relative 'items_arr'
-require_relative 'parse_json'
+require_relative 'parse_worker'
 
 module Youzan
-  class ParseWorker
-    attr_reader :uri, :json_arr
+  class UpdateSku
+    attr_reader :json_arr, :uri
     
-    def initialize(opts)
-      @uri = Youzan::Uri.new(opts).gen_uri
-    end
-
-    def run
-      downloader = http_get
-      @json_arr = Youzan::OutOfDateSku.new(downloader).parse_json
-      write_to_file json_arr
-      
-    end
-
-
-    
-    def http_get
-      #binding.pry
-      Net::HTTP.get(uri)
+    def initialize
+      @json_arr = Youzan::ParseWorker.new({:api_type => "kdt_items_onsale_get", :base_url => "get"}).run
     end
 
     def update_sku
-      json_arr.each do |sku|
-        sku["num_iid"]
-        sku["sku_id"]
-        sku["quantity"]
+      json_arr[0,1].each do |sku|
+        #binding.pry
+        params = { "num_iid"  => "#{sku["num_iid"]}", "sku_id" =>  "#{sku["sku_id"]}", "quantity" => '11', 'outer_id'=>'654321' }
+
+        run_update({:api_type => "kdt_item_sku_update", :base_url => "update", :params => params})
+
       end
     end
-    
-    def write_to_file(json)
-      #binding.pry
-      File.write("yz_parse_json", JSON.pretty_generate(json))
+
+    def run_update(args)
+      uri = Youzan::Uri.new(args).gen_uri
+      post = Net::HTTP.post_form(uri, args)
+      post.body
     end
-    #binding.pry
     
   end
 end
 
-params = {
+Youzan::UpdateSku.new.update_sku
 
-}
 # api eg. kdt.items.onsale.get = kdt_items_onsale_get
-Youzan::ParseWorker.new({:api_type => "kdt_items_onsale_get", :base_url => "get", :params => params }).run
+
