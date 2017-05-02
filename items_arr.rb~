@@ -1,0 +1,32 @@
+# coding: utf-8
+require 'digest/md5'
+require 'net/http'
+require 'json'
+require 'pry'
+
+module Youzan
+  class ItemsArr
+    attr_reader :raw_json
+    
+    def initialize(raw_json)
+      @raw_json = raw_json
+      #parse_json
+    end
+
+    def yz_arr
+      JSON.parse(raw_json)
+      #binding.pry
+    end
+    
+    def items_arr
+      yz_arr["response"]["items"]
+    end 
+    
+  end
+end
+
+
+
+
+
+

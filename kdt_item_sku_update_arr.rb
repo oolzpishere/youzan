@@ -19,7 +19,6 @@ module Youzan
     def parse_json 
       Sku.new(items_arr).skus_arr  
     end
-
   end
 
   class Sku
@@ -34,7 +33,7 @@ module Youzan
       @skus_arr
       items_arr.each do |item|
         item["skus"].each do |sku|
-          arr.push(item) if out_of_date?( sku["properties_name"] )
+          arr.push(item) if Youzan::out_of_date?( sku["properties_name"] )
         end
       end
       arr
@@ -43,36 +42,50 @@ module Youzan
     def skus_arr
       arr = []
       filter_items.each do |item|
-        item["skus"].each { |sku| arr.push(sku.merge({"title" => item["title"]}) )  if out_of_date?( sku["properties_name"] ) }
+        item["skus"].each do |sku|
+          if Youzan::out_of_date?( sku["properties_name"] ) #&& sku["quantity"].to_i.nonzero?
+            arr.push(sku.merge({"title" => item["title"]}) )  
+          end
+        end
       end
       # binding.pry
       arr
     end
+
+    private
+
     
-    def out_of_date? sku
-      #out of date?
-      if  /出行日期/.match(sku)
-        #chineseMonth = `date "+%m月"`.chomp
-        month = `date "+%m"`.to_i
-        day =  `date "+%d"`.to_i
-        # binding.pry
-        /(\d+)月/.match(sku)
-        month_schedule = $1.to_i
-        /(\d+)日/.match(sku)
-        # nil.to_i is 0.   other string can't convert to integer is 0.
-        day_schedule = $1.to_i
+  end
 
-        # schedule = (month_schedule + day_schedule).to_i
+  def self.out_of_date?(sku)
+    #out of date?
+    if  /出行日期/.match(sku) ||  /出行时间/.match(sku)
+      
 
-        # return true if now > schedule
-        if month > month_schedule
-          return true
-        elsif month = month_schedule && day_schedule > 0 && day >= day_schedule
-          return true 
-        end
-        
-      end
-    end
+      
+      #chineseMonth = `date "+%m月"`.chomp
+      month = `date "+%m"`.to_i
+      day =  `date "+%d"`.to_i
+      # binding.pry
+      /(\d+)月/.match(sku)
+      month_schedule = $1.to_i
+      /(\d+)日/.match(sku)
+      # nil.to_i is 0.   other string can't convert to integer is 0.
+      day_schedule = $1.to_i 
+
+      # schedule = (month_schedule + day_schedule).to_i
+
+      # return true if now > schedule
+      if month_schedule > 0 && month > month_schedule
+        return true
+      elsif month < month_schedule
+        return false
+      elsif month = month_schedule && day_schedule > 0 && day >= day_schedule + 5
+        return true
+      else
+        return false
+      end 
+    end 
   end
 
   # class DateString

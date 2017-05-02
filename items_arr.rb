@@ -4,6 +4,7 @@ require 'net/http'
 require 'json'
 require 'pry'
 require_relative 'uri'
+require 'uri'
 
 module Youzan
   class ItemsArr
@@ -35,9 +36,3 @@ module Youzan
     
   end
 end
-
-
-
-
-
-

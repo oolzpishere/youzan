@@ -4,6 +4,7 @@ require 'net/http'
 require 'json'
 require 'pry'
 require 'yaml'
+require 'uri'
 
 module Youzan
   class Uri
@@ -37,7 +38,7 @@ module Youzan
     end
     
     def gen_uri
-      #binding.pry
+      # binding.pry
       uri = URI(base_url)
       uri.query = URI.encode_www_form(final_params)
       uri

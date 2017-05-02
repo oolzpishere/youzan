@@ -6,7 +6,6 @@ require 'pry'
 require_relative 'uri'
 require_relative 'out_of_date_sku'
 require_relative 'items_arr'
-require_relative 'parse_json'
 require_relative 'worker'
 
 module Youzan

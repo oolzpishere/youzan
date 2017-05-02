@@ -1,0 +1,76 @@
+require 'spec_helper'
+require '../youzan/job.rb'
+require 'uri'
+
+RSpec.describe Youzan::Job do
+  describe 'ItemsArr#items_arr' do
+    before(:example) do
+      @items_arr = Youzan::ItemsArr.new({:api_type => "kdt_items_onsale_get", :base_url => "get"}).items_arr
+    end
+    
+    it 'http get and return items array, each one is a product' do
+      expect(@items_arr.count).to be > 0
+    end
+
+    it 'check skus array properties_name' do
+      # binding.pry
+      skus_arr = Youzan::KdtItemSkuUpdateArr.new( @items_arr, {:api_type => "kdt_item_sku_update"}).parse_json
+      
+      skus_arr.each do |sku|
+        # binding.pry
+        expect(Youzan::out_of_date?(sku["properties_name"]) ).to be true
+      end
+      
+      expect(skus_arr.count).to be > 0
+    end
+    
+    it 'update sku success' do
+      update_job = Youzan::Job.new({:api_type => "kdt_item_sku_update"}).job
+      expect(update_job).to be_truthy
+    end
+    
+  end
+
+  
+
+  # describe 'KdtItemSkuUpdateArr#skus_arr' do
+  #   it 'check skus array properties_name' do
+  #     binding.pry
+  #     skus_arr = Youzan::KdtItemSkuUpdateArr.new( @items_arr, {:api_type => "kdt_item_sku_update"}).parse_json
+  #     expect(skus_arr.count).to be > 0
+  #   end
+  # end
+
+  # describe 'ItemsArr#items_arr' do
+  #   it 'http get and return items array, each one is a product' do
+  #     items_arr = Youzan::ItemsArr.new({:api_type => "kdt_items_onsale_get", :base_url => "get"}).items_arr
+  #     expect(items_arr.count).to be > 0
+  #   end
+  # end
+
+  # describe 'KdtItemSkuUpdateArr#skus_arr' do
+  #   it 'check skus array properties_name' do
+  #     skus_arr = Youzan::KdtItemSkuUpdateArr.new( items_arr, {:api_type => "kdt_item_sku_update"}).parse_json
+  #     expect(skus_arr.count).to be > 0
+  #   end
+  # end
+  
+  # describe 'ItemsArr#items_arr' do
+  #   it 'http get and return items array, each one is a product' do
+  #     job = Youzan::Job.new({:api_type => "kdt_item_sku_update"}).job
+  #     expect(job).to be_truthy
+  #   end
+  # end
+  # describe 'KdtItemSkuUpdateJob#run' do
+  #   it 'returns the skus array that out of date' do
+  #     expect(KdtItemSkuUpdateArr.new.add(1, 2)).to eq(3)
+  #   end
+  # end
+
+  # describe 'c job' do
+  #   it 'returns the skus array that out of date' do
+  #     expect(KdtItemSkuUpdateArr.new.add(1, 2)).to eq(3)
+  #   end
+  # end
+  
+end

@@ -1,0 +1,5 @@
+example_id                     | status | run_time      |
+------------------------------ | ------ | ------------- |
+./spec/job_spec.rb[1:1:1]      | passed | 29.33 seconds |
+./spec/skus_arr_spec.rb[1:1:1] | passed | 1.66 seconds  |
+./spec/skus_arr_spec.rb[1:1:2] | passed | 5.72 seconds  |

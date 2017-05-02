@@ -24,12 +24,12 @@ module Youzan
         # binding.pry
         params = { "num_iid"  => "#{sku["num_iid"]}", "sku_id" =>  "#{sku["sku_id"]}",  "quantity" => '0' }
 
-        run_update({:api_type => api_type, :base_url => api_type, :params => params})
+        post_update({:api_type => api_type, :base_url => api_type, :params => params})
 
       end
     end
     
-    def run_update(args)
+    def post_update(args)
       uri = Youzan::Uri.new(args).gen_uri
       # binding.pry
       post = Net::HTTP.post_form( uri, args[:params] )

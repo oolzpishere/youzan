@@ -6,24 +6,24 @@ require 'pry'
 require_relative 'uri'
 require_relative 'out_of_date_sku'
 require_relative 'items_arr'
-require_relative 'parse_json'
 
 module Youzan
   class ParseWorker
-    attr_reader :uri, :json_arr
-    
+    attr_reader :uri, :json_arr, :api_type
+
     def initialize(opts)
       @uri = Youzan::Uri.new(opts).gen_uri
+      @api_type = opts[:api_type]
     end
 
     def run
+
       downloader = http_get
-      @json_arr = Youzan::OutOfDateSku.new(downloader).parse_json
+      class_name = 'Youzan::' +  api_type.split('_').map(&:capitalize).join + 'Json'
+      @json_arr = Object.const_get(class_name).new(downloader).parse_json
       #write_to_file json_arr
       @json_arr
     end
-
-
     
     def http_get
       #binding.pry

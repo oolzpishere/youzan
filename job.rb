@@ -3,10 +3,9 @@ require 'digest/md5'
 require 'net/http'
 require 'json'
 require 'pry'
-require_relative 'uri'
+# require_relative 'uri'
 
 require_relative 'kdt_item_sku_update_job'
-require_relative 'kdt_items_update_delisting_job'
 require_relative 'items_arr'
 
 
@@ -28,13 +27,12 @@ module Youzan
     end
 
 
-
-
     
   end
 end
 
-Youzan::Job.new({:api_type => "kdt_item_sku_update"}).job
+# Youzan::Job.new({:api_type => "kdt_item_sku_update"}).job
+
 # Youzan::Job.new({:api_type => "kdt_items_update_delisting"}).job
 
 # api eg. kdt.items.onsale.get = kdt_items_onsale_get

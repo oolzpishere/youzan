@@ -5,20 +5,13 @@ require 'json'
 require 'pry'
 
 module Youzan
-  class OutOfDate
-    attr_reader :raw_json
+  class KdtItemSkuUpdateArr
+    ## generate json for out of date skus
+    attr_reader :items_arr
     
-    def initialize(raw_json)
-      @raw_json = raw_json
+    def initialize(items_arr)
+      @items_arr = items_arr
       #parse_json
-    end
-
-    def yz_arr
-      JSON.parse(raw_json)
-    end
-    
-    def items_arr
-      yz_arr["response"]["items"]
     end
 
     def parse_json 
@@ -26,7 +19,8 @@ module Youzan
       items_arr.each do |item|
         item["skus"].each do |sku|
           if out_of_date?(sku["properties_name"])
-            skus_array.push item["num_iid"], item["title"], item["detail_url"], item["skus"] #sku_filter(item["skus"])
+            skus_array.push sku
+            #item["num_iid"], item["title"], item["detail_url"], item["skus"] #sku_filter(item["skus"])
             break;
           end
         end 
