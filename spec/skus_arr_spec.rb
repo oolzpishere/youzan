@@ -1,7 +1,6 @@
 # coding: utf-8
 require 'spec_helper'
 
-
 RSpec.describe Youzan::KdtItemSkuUpdateArr do
   describe 'ItemsArr#items_arr' do
     before(:example) do
@@ -34,18 +33,16 @@ RSpec.describe Youzan::KdtItemSkuUpdateArr do
         /(\d+)月/.match(sku)
         month_schedule = $1.to_i
         /(\d+)日/.match(sku)
-        day_schedule = $1.to_i 
+        # nil.to_i is 0.   other string can't convert to integer is 0.
+        day_schedule = $1.to_i
 
-        if month_schedule > 0 && month > month_schedule
-          return true
-        elsif month < month_schedule
-          return false
-        elsif month = month_schedule && day_schedule > 0 && day >= day_schedule + 5
+        case DateTime.new(2017, month_schedule, day_schedule) -1 <=> DateTime.now
+        when -1
           return true
         else
           return false
-        end
-        
+        end        
+
       end
     end
     
