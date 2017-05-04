@@ -4,7 +4,7 @@ require 'json'
 
 #change root path to appropriate working directory
 root = File.expand_path("~/nut/sandbox/youzan")
-
+`su -l ubuntu; source ~/.zshrc`
 `cd #{root}; rspec spec/skus_arr_spec.rb --format j -o skus_spec_output` 
 
 path = File.expand_path("../../skus_spec_output", __FILE__ )
