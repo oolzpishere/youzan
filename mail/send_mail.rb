@@ -6,12 +6,13 @@ require 'json'
 
 
 class SendMail
-  attr_reader :report, :root, :failure_count, :mail
+  attr_reader :report, :root, :failure_count, :mail, :skus_p_name
   
   def initialize
     @root = gen_root_path
     @report = gen_report
     @failure_count = @report["summary"]["failure_count"]
+    @skus_p_name = File.read("skus_p_name")
   end
 
   def run
@@ -40,7 +41,7 @@ class SendMail
     @mail = Mail.new
     @mail.from =  'page_lee@qq.com'
     @mail.to = 'lizhipeng@dbtrip.com.cn'
-    @mail.body = report
+    @mail.body = report.to_s + skus_p_name
     if failure_count.zero?
       @mail.subject = 'skus success report'
     else

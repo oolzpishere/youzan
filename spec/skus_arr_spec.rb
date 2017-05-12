@@ -20,11 +20,13 @@ RSpec.describe Youzan::KdtItemSkuUpdateArr do
       
       # p "date now: #{@month}月#{@day}日"
       # p "skus arr count: #{skus_arr.count}"
+      @skus_p_name = String.new
       skus_arr.each do |sku|
         # binding.pry
-        # p sku["properties_name"]
+        @skus_p_name << sku["properties_name"]
         expect( ood?(sku["properties_name"], @month, @day) ).to be true
-      end 
+      end
+      File.write("skus_p_name", @skus_p_name)
     end
 
     #out of date
