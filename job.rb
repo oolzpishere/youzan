@@ -27,7 +27,6 @@ module Youzan
     end
 
 
-    
   end
 end
 

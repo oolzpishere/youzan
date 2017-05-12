@@ -18,11 +18,11 @@ RSpec.describe Youzan::KdtItemSkuUpdateArr do
       @month = `date "+%m"`.to_i
       @day =  `date "+%d"`.to_i
       
-      p "date now: #{@month}月#{@day}日"
-      p "skus arr count: #{skus_arr.count}"
+      # p "date now: #{@month}月#{@day}日"
+      # p "skus arr count: #{skus_arr.count}"
       skus_arr.each do |sku|
         # binding.pry
-        p sku["properties_name"]
+        # p sku["properties_name"]
         expect( ood?(sku["properties_name"], @month, @day) ).to be true
       end 
     end
